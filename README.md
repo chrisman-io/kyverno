@@ -25,7 +25,7 @@ kubectl apply ./yaml/check-labels-policy.yaml
 You can check the logs on the kyverno controller pod and look for any errors. Here we will open a new session and tail the log:
 
 ```bash
-kubectl -n kyverno logs <kyverno_pod_name> -f
+kubectl -n kyverno logs $(kubectl get pods -n kyverno -ojsonpath='{.items..metadata.name}') -f
 ```
 
 Now we will try to deploy a pod without the required `owner` label
