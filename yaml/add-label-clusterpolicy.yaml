@@ -1,0 +1,19 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: who-created-this
+spec:
+  background: false
+  rules:
+  - name: who-created-this
+    match:
+      resources:
+        kinds:
+        - Pod
+        namespaces:
+        - default
+    mutate:
+      patchStrategicMerge:
+        metadata:
+          labels:
+            created-by: "{{request.userInfo.username}}"
